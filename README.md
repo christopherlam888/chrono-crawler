@@ -19,23 +19,23 @@ Usage:
 
 To get listings from Theo and Harris, use the following command:
 
-```python3 chrono-crawler.py -t```
+```python3 chrono_crawler.py -t```
 
 To get listings from Delray Watch, use the following command:
 
-```python3 chrono-crawler.py -d```
+```python3 chrono_crawler.py -d```
 
 To get listings from Omega Enthusiast, use the following command:
 
-```python3 chrono-crawler.py -o```
+```python3 chrono_crawler.py -o```
 
 To search for a term like 'Universal Geneve', use the following command:
 
-```python3 chrono-crawler.py -s 'Universal Geneve'```
+```python3 chrono_crawler.py -s 'Universal Geneve'```
 
 You can also use the following command to see the help message of the script:
 
-```python3 chrono-crawler.py -h```
+```python3 chrono_crawler.py -h```
 
 ***
 
