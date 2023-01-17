@@ -4,6 +4,8 @@ A web scraper to get listings from popular vintage and pre-owned watch retailers
 
 ![1](https://user-images.githubusercontent.com/85356197/212807279-354e0bec-8cd4-4609-823c-896772a4a365.png)
 
+![2](https://user-images.githubusercontent.com/85356197/212807582-aa150e7a-1670-47b6-aeb8-8e597198dc6c.png)
+
 Currently supported websites:
 - Theo and Harris
 - Delray Watch
