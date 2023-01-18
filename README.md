@@ -33,6 +33,10 @@ To search for a term like 'Universal Geneve', use the following command:
 
 ```python3 chrono_crawler.py -s 'Universal Geneve'```
 
+To sort by price (low to high), use the following command:
+
+```python3 chrono_crawler.py -p```
+
 You can also use the following command to see the help message of the script:
 
 ```python3 chrono_crawler.py -h```
@@ -40,7 +44,6 @@ You can also use the following command to see the help message of the script:
 ***
 
 Features to implement:
-- Sorting by price
 - Use Selenium for Delray Watch to accomodate a less-than-ideal website
 - Add more websites
 
