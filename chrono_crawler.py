@@ -28,6 +28,7 @@ def parse_args():
     parser.add_argument('-d', '--delraywatch', dest='delraywatch', action='store_true')
     parser.add_argument('-o', '--omegaenthusiast', dest='omegaenthusiast', action='store_true')
     parser.add_argument('-s', '--search', dest='search')
+    parser.add_argument('-p', '--price', dest='price', action='store_true')
     args = vars(parser.parse_args())
     return args
 
@@ -157,6 +158,10 @@ def main():
     if args['search']:
         search = args['search'].strip().lower()
         listings = list(filter(lambda listing: search in listing.title.lower(), listings))
+
+    # price sort
+    if args['price']:
+        listings.sort(key=lambda listing: listing.price)
 
     # print table
     print()
