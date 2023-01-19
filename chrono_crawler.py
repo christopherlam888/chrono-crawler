@@ -5,7 +5,10 @@ import argparse
 import requests
 from requests import get
 from bs4 import BeautifulSoup
-
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 import multiprocessing
 import tqdm
 import sys
@@ -33,21 +36,17 @@ def parse_args():
     return args
 
 headers = {"Accept-Language": "en-US, en;q=0.5"}
+options = Options()
+options.headless = True
+options.add_argument('--window-size=1920,1080')
+driver = webdriver.Chrome(options = options)
 
-def scrape_delraywatch(page):
-    listings_delraywatch = []
-    delraywatch_results = requests.get(page, headers = headers)
-    delraywatch_soup = BeautifulSoup(delraywatch_results.text, "html.parser")
-    delraywatch_products = delraywatch_soup.find_all('li', class_='product')
-    for li in delraywatch_products:
-        title = li.find('h4', class_='card-title').a.text
-        if "Inventory" in title:
-            title = title[:-17]
-        price = int(li.find('span', class_='price price--withoutTax').text[1:-3].replace(",",""))
-        photohtml = li.find('img')
-        urlhtml = li.find('a')
-        listings_delraywatch.append(Listing(title, price, photohtml['src'], urlhtml['href'], "Delray Watch"))
-    return listings_delraywatch
+def check_exists(xpath):
+    try:
+        driver.find_element(By.XPATH, xpath)
+    except NoSuchElementException:
+        return False
+    return True
 
 def omegaenthusiast_check_page(omegaenthusiast, counter):
     omegaenthusiast_results = requests.get(omegaenthusiast+str(counter), headers = headers)
@@ -115,16 +114,26 @@ def main():
     if delraywatch_selected:
         print("Scraping Delray Watch...")
         delraywatch = "https://delraywatch.com/pre-owned-watches/"
-        delraywatch_results = requests.get(delraywatch, headers = headers)
-        delraywatch_soup = BeautifulSoup(delraywatch_results.text, "html.parser")
-        delraywatch_anchors = delraywatch_soup.find_all('a', class_='pagination-link')
-        delraywatch_pages = []
-        for a in delraywatch_anchors:
-            delraywatch_pages.append(delraywatch + a['href'][19:])
-        with multiprocessing.Pool() as pool, tqdm.tqdm(total=len(delraywatch_pages)) as pbar:
-            for listings_delraywatch in pool.imap_unordered(scrape_delraywatch, delraywatch_pages):
-                listings.extend(listings_delraywatch)
-                pbar.update()
+        driver.get(delraywatch)
+        more_pages = True
+        while more_pages:
+            delraywatch_products = driver.find_elements(By.XPATH, "//li[@class='product']")
+            for li in delraywatch_products:
+                title = li.find_element(By.XPATH, ".//h4[@class='card-title']//a").text
+                if "Inventory" in title:
+                    title = title[:-17]
+                price = int(li.find_element(By.XPATH, ".//span[@class='price price--withoutTax']").text[1:-3].replace(",",""))
+                photo = li.find_element(By.TAG_NAME, "img").get_attribute('src')
+                url = li.find_element(By.TAG_NAME, "a").get_attribute('href')
+                listings.append(Listing(title, price, photo, url, "Delray Watch"))
+            next_link_xpath = "//li[@class='pagination-item pagination-item--next']//a"
+            if(check_exists(next_link_xpath)):
+                next_link = driver.find_element(By.XPATH, next_link_xpath)
+                next_link.click()
+                driver.refresh()
+            else:
+                more_pages = False
+        driver.quit()
         print("Delray Watch scraped.")
 
     # scrape omegaenthusiast
