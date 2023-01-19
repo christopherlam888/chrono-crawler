@@ -11,7 +11,7 @@ Currently supported websites:
 - Delray Watch
 - Omega Enthusiast
 
-Using argparse, requests, BeautifulSoup, multiprocessing, tqdm.
+Using argparse, requests, BeautifulSoup, Selenium, multiprocessing, tqdm.
 
 ***
 
@@ -44,7 +44,6 @@ You can also use the following command to see the help message of the script:
 ***
 
 Features to implement:
-- Use Selenium for Delray Watch to accomodate a less-than-ideal website
 - Add more websites
 
 ***
