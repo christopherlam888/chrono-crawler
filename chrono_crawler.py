@@ -13,6 +13,7 @@ import multiprocessing
 import tqdm
 import sys
 sys.setrecursionlimit(10000)
+import webbrowser
 
 def draw_text():
     print(" ____  ____  ____  ____  ____  ____ ")
@@ -185,6 +186,7 @@ def main():
         if selection.isdigit() and int(selection) >= 0 and int(selection) < len(listings):
             print(f"Photo:\n{listings[int(selection)].photo}")
             print(f"URL:\n{listings[int(selection)].url}")
+            webbrowser.open(listings[int(selection)].url, new=2)
         else:
             browsing = False
 
