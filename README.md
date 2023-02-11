@@ -1,51 +1,66 @@
 # Chrono Crawler
 
+<p align="left">
+<img src="https://img.shields.io/github/languages/top/christopherlam888/chrono-crawler.svg" >
+<a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+<a href="https://www.gnu.org/licenses/gpl-3.0" alt="License: GPLv3"><img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg"></a>
+</p>
+
 A web scraper to get listings from popular vintage and pre-owned watch retailers.
 
-![1](https://user-images.githubusercontent.com/85356197/212807279-354e0bec-8cd4-4609-823c-896772a4a365.png)
+## Features
 
-![2](https://user-images.githubusercontent.com/85356197/212807582-aa150e7a-1670-47b6-aeb8-8e597198dc6c.png)
+- Scrape hundreds of listings from different vintage and pre-owned watch retail sites
+- Faster scraping with multithreading
+- Get listings by site
+- Search for listings contatining a search term
+- Sort listings by price (low to high)
+- Open listings in-browser
 
-Currently supported websites:
-- Theo and Harris
-- Delray Watch
-- Omega Enthusiast
+## Supported Sites
 
-Using argparse, requests, BeautifulSoup, Selenium, multiprocessing, tqdm, webbrowser.
+- Theo and Harris: <https://theoandharris.com/vintage-watches/>
+- Delray Watch: <https://www.delraywatch.com/collections/pre-owned-watches/>
+- Omega Enthusiast: <https://www.omegaenthusiastltd.com/shop-all/>
 
-***
+## Installation
 
-Usage:
+Clone/Download the GitHub repository:
 
-To get listings from Theo and Harris, use the following command:
+```git clone https://github.com/christopherlam888/chrono-crawler.git```
 
-```python3 chrono_crawler.py -t```
+Navigate to the directory:
 
-To get listings from Delray Watch, use the following command:
+```cd chrono-crawler```
 
-```python3 chrono_crawler.py -d```
+Install requirements:
 
-To get listings from Omega Enthusiast, use the following command:
+```pip3 install -r requirements.txt```
 
-```python3 chrono_crawler.py -o```
+Chrono Crawler uses Selenium with the Chrome WebDriver. Install Chrome/Chromium before using.
 
-To search for a term like 'Universal Geneve', use the following command:
+## Usage
 
-```python3 chrono_crawler.py -s 'Universal Geneve'```
+| **Command**                                   | **Description**                                                |
+| :-------------------------------------------- | :------------------------------------------------------------- |
+| `python3  chrono_crawler.py`                  | Run Chrono Crawler with defaults (all sites)                   |
+| `python3  chrono_crawler.py -t`               | Get listings from Theo and Harris                              |
+| `python3  chrono_crawler.py -d`               | Get listings from Delray Watch                                 |
+| `python3  chrono_crawler.py -o`               | Get listings from Omega Enthusiast                             |
+| `python3  chrono_crawler.py -s [search]`      | Search for listings containing a search term                   |
+| `python3  chrono_crawler.py -p`               | Sort listings by price (low to high)                           |
+| `python3  chrono_crawler.py -h`               | Show help message.                                             |
 
-To sort by price (low to high), use the following command:
+## Screenshots
 
-```python3 chrono_crawler.py -p```
+![1](https://user-images.githubusercontent.com/85356197/218275115-304fc5f7-e13b-4312-846a-509c296b63ab.png)
+![2](https://user-images.githubusercontent.com/85356197/218275144-73d28850-6e21-4f13-a351-47971e253a40.png)
 
-You can also use the following command to see the help message of the script:
+## Features To Implement
 
-```python3 chrono_crawler.py -h```
-
-***
-
-Features to implement:
 - Add more websites
 
-***
+## License
+[![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/gpl-3.0.en.html)  
 
 This project is licensed under the GNU General Public License v3.0.
