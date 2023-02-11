@@ -9,7 +9,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-import multiprocessing
+import multiprocessing.dummy as multiprocessing
 import tqdm
 import sys
 
