@@ -11,6 +11,9 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 import multiprocessing.dummy as multiprocessing
 import tqdm
+import itertools
+import threading
+import time
 import sys
 
 sys.setrecursionlimit(10000)
@@ -43,6 +46,18 @@ def parse_args():
     parser.add_argument("-p", "--price", dest="price", action="store_true")
     args = vars(parser.parse_args())
     return args
+
+
+done = True
+
+
+def animate_loading():
+    for c in itertools.cycle(["|", "/", "-", "\\"]):
+        if done:
+            break
+        sys.stdout.write(f"\r {c} ")
+        sys.stdout.flush()
+        time.sleep(0.1)
 
 
 headers = {"Accept-Language": "en-US, en;q=0.5"}
@@ -78,7 +93,7 @@ def scrape_omegaenthusiast(page):
         if li.find("span", class_="cfpn1d"):
             title = li.find(
                 "h3",
-                class_="syQOIUy okvj6QX---typography-11-runningText okvj6QX---priority-7-primary syHtuvM FzO_a9",
+                class_="se1xi5M",
             ).text
             price = int(li.find("span", class_="cfpn1d").text[1:-3].replace(",", ""))
             photohtml_wrapper = li.find("div", class_="naMHY_ vALCqq")
@@ -132,6 +147,11 @@ def main():
     # scrape delraywatch
     if args["delraywatch"]:
         print("Scraping Delray Watch...")
+        global done
+        done = False
+        t = threading.Thread(target=animate_loading)
+        t.daemon = True
+        t.start()
         driver.get(SITES["delraywatch"])
         while True:
             delraywatch_products = driver.find_elements(
@@ -158,6 +178,7 @@ def main():
             else:
                 break
         driver.quit()
+        done = True
         print("Delray Watch scraped.")
 
     # scrape omegaenthusiast
