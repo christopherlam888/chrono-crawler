@@ -7,6 +7,7 @@ from omegaenthusiast import *
 import multiprocessing.dummy as multiprocessing
 import tqdm
 import sys
+from tabulate import tabulate
 
 sys.setrecursionlimit(10000)
 import webbrowser
@@ -91,14 +92,19 @@ def main():
         listings.sort()
 
     # print table
-    print()
-    print("{:<5} {:<120} {:<10} {:<20}".format("Item", "Title", "Price", "Store"))
+    listings_display = []
     for i, listing in enumerate(listings):
-        print(
-            "{:<5} {:<120} {:<10} {:<20}".format(
-                i, listing.title, f"${listing.price:,}", listing.store
-            )
+        listings_display.append(
+            [i, listing.title, f"${listing.price:,}", listing.store]
         )
+    print()
+    print(
+        tabulate(
+            listings_display,
+            headers=["Item", "Title", "Price", "Store"],
+            tablefmt="fancy_grid",
+        )
+    )
 
     # browsing
     while True:
