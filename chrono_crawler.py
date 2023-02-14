@@ -1,29 +1,15 @@
-from listing import Listing
+from sites import *
+from parse_args import *
+from theoandharris import *
+from delraywatch import *
+from omegaenthusiast import *
 
-import argparse
-
-import requests
-from requests import get
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 import multiprocessing.dummy as multiprocessing
 import tqdm
-import itertools
-import threading
-import time
 import sys
 
 sys.setrecursionlimit(10000)
 import webbrowser
-
-SITES = {
-    "theoandharris": "https://theoandharris.com/vintage-watches/",
-    "delraywatch": "https://www.delraywatch.com/collections/pre-owned-watches",
-    "omegaenthusiast": "https://www.omegaenthusiastltd.com/shop-all?page=",
-}
 
 
 def draw_text():
@@ -36,81 +22,6 @@ def draw_text():
     print("||__||||__||||__||||__||||__||||__||||__||")
     print("|/__\||/__\||/__\||/__\||/__\||/__\||/__\|")
     print()
-
-
-def parse_args():
-    parser = argparse.ArgumentParser(description="Available Options")
-    for key in SITES:
-        parser.add_argument(f"-{key[0]}", f"--{key}", dest=key, action="store_true")
-    parser.add_argument("-s", "--search", dest="search")
-    parser.add_argument("-p", "--price", dest="price", action="store_true")
-    args = vars(parser.parse_args())
-    return args
-
-
-done = True
-
-
-def animate_loading():
-    for c in itertools.cycle(["|", "/", "-", "\\"]):
-        if done:
-            break
-        sys.stdout.write(f"\r {c} ")
-        sys.stdout.flush()
-        time.sleep(0.1)
-
-
-headers = {"Accept-Language": "en-US, en;q=0.5"}
-options = Options()
-options.headless = True
-options.add_argument("--window-size=1920,1080")
-driver = webdriver.Chrome(options=options)
-
-
-def get_element(xpath):
-    try:
-        return driver.find_element(By.XPATH, xpath)
-    except NoSuchElementException:
-        return None
-
-
-def omegaenthusiast_check_page(counter):
-    omegaenthusiast_results = requests.get(
-        SITES["omegaenthusiast"] + str(counter), headers=headers
-    )
-    omegaenthusiast_soup = BeautifulSoup(omegaenthusiast_results.text, "html.parser")
-    omegaenthusiast_list = omegaenthusiast_soup.find("ul", class_="S4WbK_")
-    return bool(omegaenthusiast_list.find("li"))
-
-
-def scrape_omegaenthusiast(page):
-    listings_omegaenthusiast = []
-    omegaenthusiast_results = requests.get(page, headers=headers)
-    omegaenthusiast_soup = BeautifulSoup(omegaenthusiast_results.text, "html.parser")
-    omegaenthusiast_list = omegaenthusiast_soup.find("ul", class_="S4WbK_")
-    omegaenthusiast_products = omegaenthusiast_list.find_all("li")
-    for li in omegaenthusiast_products:
-        if li.find("span", class_="cfpn1d"):
-            title = li.find(
-                "h3",
-                class_="se1xi5M",
-            ).text
-            price = int(li.find("span", class_="cfpn1d").text[1:-3].replace(",", ""))
-            photohtml_wrapper = li.find("div", class_="naMHY_ vALCqq")
-            photohtml = photohtml_wrapper.find("img")
-            urlhtml = li.find("a")
-            listings_omegaenthusiast.append(
-                Listing(
-                    title,
-                    price,
-                    photohtml["src"]
-                    .replace("blur_2,", "")
-                    .replace("w_110,h_107", "w_155,h_155"),
-                    urlhtml["href"],
-                    "Omega Enthusiast",
-                )
-            )
-    return listings_omegaenthusiast
 
 
 def main():
@@ -128,57 +39,14 @@ def main():
     # scrape theoandharris
     if args["theoandharris"]:
         print("Scraping Theo and Harris...")
-        theoandharris_results = requests.get(SITES["theoandharris"], headers=headers)
-        theoandharris_soup = BeautifulSoup(theoandharris_results.text, "html.parser")
-        theoandharris_list = theoandharris_soup.find("ul", class_="columns-4")
-        theoandharris_products = theoandharris_list.find_all("li", class_="product")
-        for li in theoandharris_products:
-            title = li.find("h2", class_="woocommerce-loop-product__title").text
-            price = int(li.find("bdi").text[1:-4].replace(",", ""))
-            photohtml = li.find("img")
-            urlhtml = li.find("a")
-            listings.append(
-                Listing(
-                    title, price, photohtml["src"], urlhtml["href"], "Theo and Harris"
-                )
-            )
+        listings.extend(scrape_theoandharris())
         print("Theo and Harris scraped.")
 
     # scrape delraywatch
     if args["delraywatch"]:
         print("Scraping Delray Watch...")
-        global done
-        done = False
-        t = threading.Thread(target=animate_loading)
-        t.daemon = True
-        t.start()
-        driver.get(SITES["delraywatch"])
-        while True:
-            delraywatch_products = driver.find_elements(
-                By.XPATH, "//li[@class='product']"
-            )
-            for li in delraywatch_products:
-                title = li.find_element(By.XPATH, ".//h4[@class='card-title']//a").text
-                if "Inventory" in title:
-                    title = title[:-17]
-                price = int(
-                    li.find_element(
-                        By.XPATH, ".//span[@class='price price--withoutTax']"
-                    )
-                    .text[1:-3]
-                    .replace(",", "")
-                )
-                photo = li.find_element(By.TAG_NAME, "img").get_attribute("src")
-                url = li.find_element(By.TAG_NAME, "a").get_attribute("href")
-                listings.append(Listing(title, price, photo, url, "Delray Watch"))
-            next_link_xpath = "//li[@class='pagination-item pagination-item--next']//a"
-            if next_link := get_element(next_link_xpath):
-                next_link.click()
-                driver.refresh()
-            else:
-                break
-        driver.quit()
-        done = True
+        listings.extend(scrape_delraywatch())
+        print()
         print("Delray Watch scraped.")
 
     # scrape omegaenthusiast
