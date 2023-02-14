@@ -53,8 +53,8 @@ Chrono Crawler uses Selenium with the Chrome WebDriver. Install Chrome/Chromium 
 
 ## Screenshots
 
-![1](https://user-images.githubusercontent.com/85356197/218275115-304fc5f7-e13b-4312-846a-509c296b63ab.png)
-![2](https://user-images.githubusercontent.com/85356197/218275144-73d28850-6e21-4f13-a351-47971e253a40.png)
+![1](https://user-images.githubusercontent.com/85356197/218775400-4f1a8065-8cbd-43b2-be1e-ca132a31a02b.png)
+![2](https://user-images.githubusercontent.com/85356197/218775410-039febd4-a1bd-49bb-a9b8-7e5a260d2a44.png)
 
 ## Features To Implement
 
