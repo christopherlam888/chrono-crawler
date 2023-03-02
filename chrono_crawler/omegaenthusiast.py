@@ -1,6 +1,6 @@
-from listing import Listing
-from sites import *
-from beautifulsoup_options import *
+from .listing import Listing
+from .sites import *
+from .beautifulsoup_options import *
 
 import requests
 from bs4 import BeautifulSoup

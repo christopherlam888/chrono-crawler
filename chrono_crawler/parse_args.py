@@ -1,4 +1,4 @@
-from sites import *
+from .sites import *
 import argparse
 
 

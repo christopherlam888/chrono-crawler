@@ -1,8 +1,8 @@
-from sites import *
-from parse_args import *
-from theoandharris import *
-from delraywatch import *
-from omegaenthusiast import *
+from .sites import *
+from .parse_args import *
+from .theoandharris import *
+from .delraywatch import *
+from .omegaenthusiast import *
 
 import multiprocessing.dummy as multiprocessing
 import tqdm
