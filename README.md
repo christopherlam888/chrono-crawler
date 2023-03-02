@@ -43,13 +43,13 @@ Chrono Crawler uses Selenium with the Chrome WebDriver. Install Chrome/Chromium 
 
 | **Command**                                   | **Description**                                                |
 | :-------------------------------------------- | :------------------------------------------------------------- |
-| `python3  -m chrono_crawler`                  | Run Chrono Crawler with defaults (all sites)                   |
-| `python3  -m chrono_crawler -t`               | Get listings from Theo and Harris                              |
-| `python3  -m chrono_crawler -d`               | Get listings from Delray Watch                                 |
-| `python3  -m chrono_crawler -o`               | Get listings from Omega Enthusiast                             |
-| `python3  -m chrono_crawler -s [search]`      | Search for listings containing a search term                   |
-| `python3  -m chrono_crawler -p`               | Sort listings by price (low to high)                           |
-| `python3  -m chrono_crawler -h`               | Show help message.                                             |
+| `python3 -m chrono_crawler`                   | Run Chrono Crawler with defaults (all sites)                   |
+| `python3 -m chrono_crawler -t`                | Get listings from Theo and Harris                              |
+| `python3 -m chrono_crawler -d`                | Get listings from Delray Watch                                 |
+| `python3 -m chrono_crawler -o`                | Get listings from Omega Enthusiast                             |
+| `python3 -m chrono_crawler -s [search]`       | Search for listings containing a search term                   |
+| `python3 -m chrono_crawler -p`                | Sort listings by price (low to high)                           |
+| `python3 -m chrono_crawler -h`                | Show help message.                                             |
 
 ## Screenshots
 
@@ -59,6 +59,7 @@ Chrono Crawler uses Selenium with the Chrome WebDriver. Install Chrome/Chromium 
 ## Features To Implement
 
 - Add more websites
+- Add more tests
 
 ## License
 [![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/gpl-3.0.en.html)  
