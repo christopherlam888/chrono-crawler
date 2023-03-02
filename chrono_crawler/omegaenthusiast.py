@@ -37,7 +37,7 @@ def scrape_omegaenthusiast(page):
                     price,
                     photohtml["src"]
                     .replace("blur_2,", "")
-                    .replace("w_110,h_107", "w_155,h_155"),
+                    .replace("w_110,h_107", "w_154,h_154"),
                     urlhtml["href"],
                     "Omega Enthusiast",
                 )
