@@ -6,10 +6,10 @@ from unittest.mock import Mock, patch
 
 def test_scrape_theoandharris():
     mock_listing = Listing(
-        "Test Listing",
-        10000,
-        "https://example.com/image.jpg",
-        "https://example.com/listing",
+        "Rolex GMT Master",
+        14995,
+        "https://theoandharris.com/wp-content/uploads/Rolex-GMT-02-23-23-1-600x600.jpg",
+        "https://theoandharris.com/shop/vintage-watches/rolex-gmt-master-3/",
         "Theo and Harris",
     )
     mock_response = Mock()
@@ -17,10 +17,13 @@ def test_scrape_theoandharris():
         <html>
             <body>
                 <ul class="columns-4">
-                    <li class="product">
-                        <h2 class="woocommerce-loop-product__title">Test Listing</h2>
-                        <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">$</span>10,000 USD</bdi></span></span>
-                        <a href="https://example.com/listing"><img src="https://example.com/image.jpg"></a>
+                    <li class="product type-product post-87582 status-publish first instock product_cat-vintage-watches has-post-thumbnail taxable shipping-taxable purchasable product-type-simple et_pb_shop_item_0_0">
+                        <a href="https://theoandharris.com/shop/vintage-watches/rolex-gmt-master-3/" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
+                            <div class="tp-image-wrapper"><noscript><img decoding="async" class="tp-image" src="https://theoandharris.com/wp-content/uploads/Rolex-GMT-02-23-23-1-600x600.jpg" srcset="" sizes="(max-width: 360px) 100vw, 360px" alt="Rolex GMT Master"></noscript><img decoding="async" class="tp-image ls-is-cached lazyloaded" src="https://theoandharris.com/wp-content/uploads/Rolex-GMT-02-23-23-1-600x600.jpg" data-src="https://theoandharris.com/wp-content/uploads/Rolex-GMT-02-23-23-1-600x600.jpg" data-srcset="" data-sizes="(max-width: 360px) 100vw, 360px" alt="Rolex GMT Master" sizes="(max-width: 360px) 100vw, 360px"><noscript><img decoding="async" class="tp-image-hover" src="https://theoandharris.com/wp-content/uploads/Rolex-GMT-02-23-23-2-600x600.png" srcset="" sizes="(max-width: 360px) 100vw, 360px" alt="Rolex GMT Master"></noscript><img decoding="async" class="tp-image-hover ls-is-cached lazyloaded" src="https://theoandharris.com/wp-content/uploads/Rolex-GMT-02-23-23-2-600x600.png" data-src="https://theoandharris.com/wp-content/uploads/Rolex-GMT-02-23-23-2-600x600.png" data-srcset="" data-sizes="(max-width: 360px) 100vw, 360px" alt="Rolex GMT Master" sizes="(max-width: 360px) 100vw, 360px"></div>
+                            <h2 class="woocommerce-loop-product__title">Rolex GMT Master</h2> <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">$</span>14,995&nbsp;USD</bdi>
+                            </span>
+                            </span>
+                        </a>
                     </li>
                 </ul>
             </body>
