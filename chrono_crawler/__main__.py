@@ -3,6 +3,7 @@ from .parse_args import *
 from .theoandharris import *
 from .delraywatch import *
 from .omegaenthusiast import *
+from .images_download import *
 
 import multiprocessing.dummy as multiprocessing
 import tqdm
@@ -90,6 +91,12 @@ def main():
     # price sort
     if args["price"]:
         listings.sort()
+
+    # images download
+    if args["images"]:
+        print("Downloading images...")
+        for listing in listings:
+            download(listing.photo, dest_folder=listing.store, dest_file=listing.title)
 
     # print table
     listings_display = []

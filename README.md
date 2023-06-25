@@ -13,8 +13,9 @@ A web scraper to get listings from popular vintage and pre-owned watch retailers
 - Scrape hundreds of listings from different vintage and pre-owned watch retail sites
 - Faster scraping with multithreading
 - Get listings by site
-- Search for listings contatining a search term
+- Search for listings containing a search term
 - Sort listings by price (low to high)
+- Download images from listings
 - Open listings in-browser
 
 ## Supported Sites
@@ -49,7 +50,8 @@ Chrono Crawler uses Selenium with the Chrome WebDriver. Install Chrome/Chromium 
 | `python3 -m chrono_crawler -o`                | Get listings from Omega Enthusiast                             |
 | `python3 -m chrono_crawler -s [search]`       | Search for listings containing a search term                   |
 | `python3 -m chrono_crawler -p`                | Sort listings by price (low to high)                           |
-| `python3 -m chrono_crawler -h`                | Show help message.                                             |
+| `python3 -m chrono_crawler -i`                | Download images from listings                                  |
+| `python3 -m chrono_crawler -h`                | Show help message                                              |
 
 ## Screenshots
 
@@ -58,6 +60,7 @@ Chrono Crawler uses Selenium with the Chrome WebDriver. Install Chrome/Chromium 
 
 ## Features To Implement
 
+- Code cleanup
 - Add more websites
 - Add more tests
 

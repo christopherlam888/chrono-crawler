@@ -25,7 +25,7 @@ def scrape_omegaenthusiast(page):
         if li.find("span", class_="cfpn1d"):
             title = li.find(
                 "h3",
-                class_="sFLgyi1",
+                class_="sznGptV",
             ).text
             price = int(li.find("span", class_="cfpn1d").text[1:-3].replace(",", ""))
             photohtml_wrapper = li.find("div", class_="naMHY_ vALCqq")
