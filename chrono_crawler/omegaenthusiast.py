@@ -11,7 +11,9 @@ def omegaenthusiast_check_page(counter):
         SITES["omegaenthusiast"] + str(counter), headers=headers
     )
     omegaenthusiast_soup = BeautifulSoup(omegaenthusiast_results.text, "html.parser")
-    omegaenthusiast_list = omegaenthusiast_soup.find("ul", class_="S4WbK_")
+    omegaenthusiast_list = omegaenthusiast_soup.find(
+        "ul", attrs={"data-hook": "product-list-wrapper"}
+    )
     return bool(omegaenthusiast_list.find("li"))
 
 
@@ -19,15 +21,21 @@ def scrape_omegaenthusiast(page):
     listings_omegaenthusiast = []
     omegaenthusiast_results = requests.get(page, headers=headers)
     omegaenthusiast_soup = BeautifulSoup(omegaenthusiast_results.text, "html.parser")
-    omegaenthusiast_list = omegaenthusiast_soup.find("ul", class_="S4WbK_")
+    omegaenthusiast_list = omegaenthusiast_soup.find(
+        "ul", attrs={"data-hook": "product-list-wrapper"}
+    )
     omegaenthusiast_products = omegaenthusiast_list.find_all("li")
     for li in omegaenthusiast_products:
-        if li.find("span", class_="cfpn1d"):
+        if li.find("span", attrs={"data-hook": "product-item-price-to-pay"}):
             title = li.find(
                 "h3",
-                class_="sznGptV",
+                attrs={"data-hook": "product-item-name"},
             ).text
-            price = int(li.find("span", class_="cfpn1d").text[1:-3].replace(",", ""))
+            price = int(
+                li.find("span", attrs={"data-hook": "product-item-price-to-pay"})
+                .text[1:-3]
+                .replace(",", "")
+            )
             photohtml_wrapper = li.find("div", class_="naMHY_ vALCqq")
             photohtml = photohtml_wrapper.find("img")
             urlhtml = li.find("a")

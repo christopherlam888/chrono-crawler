@@ -95,8 +95,13 @@ def main():
     # images download
     if args["images"]:
         print("Downloading images...")
-        for listing in listings:
-            download(listing.photo, dest_folder=listing.store, dest_file=listing.title)
+        for i, listing in enumerate(listings):
+            download(
+                listing.photo,
+                dest_folder=listing.store,
+                dest_file=f"{i}_{listing.title}",
+            )
+        print("Downloaded images.")
 
     # print table
     listings_display = []
